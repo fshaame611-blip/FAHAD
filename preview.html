@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARVESTGUARD - Saving Every Harvest</title>
+
+<style>
+:root {
+    --gold: #f5bd22;
+    --black: #070807;
+    --panel: #111411;
+    --white: #ffffff;
+    --muted: #c7c7bd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--black);
+    color: var(--white);
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #050605;
+    border-bottom: 2px solid var(--gold);
+    padding: 15px 3%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    color: white;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.logo small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+button {
+    cursor: pointer;
+}
+
+.gold-button {
+    background: linear-gradient(#ffdf65, #e9a400);
+    border: none;
+    border-radius: 9px;
+    padding: 13px 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.hero {
+    min-height: 370px;
+    padding: 65px 7%;
+    display: flex;
+    align-items: center;
+    background:
+    linear-gradient(90deg, #000 5%, rgba(0,0,0,.85) 40%, rgba(0,0,0,.15)),
+    url("HarvestGuard Gold Farming Dashboard.png")
+    center 35% / cover;
+    border-bottom: 2px solid var(--gold);
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6vw, 65px);
+    font-weight: 900;
+}
+
+.hero h1 span {
+    color: var(--gold);
+}
+
+.hero h2 {
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.hero p {
+    max-width: 470px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 22px 4%;
+    border-bottom: 1px solid var(--gold);
+}
+
+.quick {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon {
+    width: 52px;
+    height: 52px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 24px;
+}
+
+.quick small {
+    display: block;
+    color: var(--muted);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 1fr;
+    gap: 18px;
+    padding: 20px 2%;
+}
+
+.panel {
+    background: linear-gradient(145deg, #171a16, #080a08);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.panel h2 {
+    margin-bottom: 8px;
+}
+
+.panel h3 {
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.panel p {
+    color: #e4e4dc;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.gold-text {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0;
+    border: 1px solid var(--gold);
+    border-radius: 9px;
+    background: #080a08;
+    color: white;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+.full {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.result {
+    border: 1px solid var(--gold);
+    padding: 15px;
+    border-radius: 9px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: white;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.section {
+    padding: 65px 5%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-title h2 {
+    font-size: 35px;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: var(--muted);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.card h3, .card p {
+    margin: 12px 15px;
+}
+
+.card h3 {
+    color: var(--gold);
+}
+
+.card p {
+    color: var(--muted);
+}
+
+.card button {
+    margin-left: 15px;
+}
+
+.contact {
+    max-width: 750px;
+    margin: auto;
+}
+
+footer {
+    border-top: 2px solid var(--gold);
+    padding: 30px;
+    text-align: center;
+    background: black;
+}
+
+footer h2 {
+    color: var(--gold);
+}
+
+footer p {
+    margin-top: 10px;
+    color: var(--muted);
+}
+
+body.light {
+    background: #f5f3e9;
+    color: #172319;
+}
+
+body.light .panel,
+body.light .card {
+    background: white;
+    color: #172319;
+}
+
+body.light .panel p,
+body.light .card p {
+    color: #455044;
+}
+
+body.light header {
+    background: #ffffff;
+}
+
+body.light nav a {
+    color: #172319;
+}
+
+body.light input,
+body.light textarea,
+body.light select {
+    background: white;
+    color: black;
+}
+
+body.light footer {
+    background: #e9eadf;
+}
+
+@media(max-width: 950px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .right-column {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-wrap: wrap;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .quick-links {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboard,
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: 400px;
+        padding: 40px 5%;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        HARVEST<span>GUARD</span>
+        <small>SAVING EVERY HARVEST</small>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#farmers">Farmers</a>
+        <a href="#buyers">Buyers</a>
+        <a href="#transport">Transporters</a>
+        <a href="#market">Market</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <select id="language" onchange="changeLanguage()"
+        style="width:auto">
+        <option value="en">English</option>
+        <option value="sw">Kiswahili</option>
+    </select>
+
+    <button class="gold-button" onclick="toggleMode()">
+        Dark / Light
+    </button>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <h1>HARVEST<span>GUARD</span></h1>
+        <h2>SAVING EVERY HARVEST</h2>
+        <p id="heroText">
+            Smart farming solutions for better yields,
+            stronger markets and a brighter future.
+        </p>
+        <a href="#farmers">
+            <button class="gold-button">GET STARTED</button>
+        </a>
+    </div>
+</section>
+
+<div class="quick-links">
+    <div class="quick">
+        <div class="icon">♣</div>
+        <div><b>Farmers</b><small>Connect & Grow</small></div>
+    </div>
+    <div class="quick">
+        <div class="icon">▣</div>
+        <div><b>Buyers</b><small>Buy & Support</small></div>
+    </div>
+    <div class="quick">
+        <div class="icon">▰</div>
+        <div><b>Transporters</b><small>Move & Deliver</small></div>
+    </div>
+    <div class="quick">
+        <div class="icon">▥</div>
+        <div><b>Market</b><small>Trade & Prosper</small></div>
+    </div>
+</div>
+
+<section class="dashboard">
+
+    <div class="panel" id="farmers">
+        <h2>Farmers</h2>
+        <h3>Wakulima</h3>
+        <p>Add your crops and get support to grow better
+        and sell more.</p>
+
+        <form id="cropForm">
+            <input id="farmerName" placeholder="Enter your name" required>
+            <input id="cropName" placeholder="Enter your crop" required>
+            <input id="quantity" type="number" min="1"
+                placeholder="Quantity in KG" required>
+            <input id="location" placeholder="Your location" required>
+            <button class="gold-button full">✚ Add Crop</button>
+        </form>
+
+        <div class="result" id="cropResult">
+            No result yet.
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>AI Crop Assistant</h2>
+        <h3>Msaidizi wa AI wa Mazao</h3>
+
+        <p>Describe your crop problem and get initial
+        guidance.</p>
+
+        <textarea id="problem"
+        placeholder="Describe your crop problem"></textarea>
+
+        <button class="gold-button full"
+        onclick="checkProblem()">
+            ✦ CHECK PROBLEM
+        </button>
+
+        <div class="result" id="advice">
+            Your advice will appear here.
+        </div>
+        <p style="margin-top:10px;font-size:12px">
+            General guidance only. Consult an agricultural
+            extension officer for diagnosis.
+        </p>
+    </div>
+
+    <div class="right-column" id="about">
+        <div class="panel">
+            <h3>Our Mission / Dira Yetu</h3>
+            <p>
+                To support farmers with technology,
+                connect them to markets, and reduce
+                food loss for a better tomorrow.
+            </p>
+            <hr style="border-color:#e8ae16;margin:15px 0">
+            <p>
+                Kusaidia wakulima kwa teknolojia,
+                kuwaunganisha na masoko na kupunguza
+                upotevu wa chakula.
+            </p>
+        </div>
+
+        <div class="panel" id="buyers">
+            <h3>Market Place</h3>
+            <p>Buy and sell agricultural products.</p>
+            <a href="#market">
+                <button class="gold-button full">
+                    EXPLORE MARKET
+                </button>
+            </a>
+        </div>
+
+        <div class="panel" id="transport">
+            <h3>Language / Lugha</h3>
+            <p>Choose your preferred language.</p>
+            <button class="gold-button full"
+            onclick="document.getElementById('language').value='sw';changeLanguage()">
+                KISWAHILI
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<section class="section" id="market">
+    <div class="section-title">
+        <h2>HARVESTGUARD MARKETPLACE</h2>
+        <p>Find crops. Connect with farmers. Trade and prosper.</p>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=800"
+            alt="Fresh tomatoes">
+            <h3>Fresh Tomatoes</h3>
+            <p>Vegetables from farmers.</p>
+            <button class="gold-button"
+            onclick="alert('Connect this listing to a farmer account for real contact details.')">
+                VIEW CROP
+            </button>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=800"
+            alt="Maize">
+            <h3>Dry Maize</h3>
+            <p>Quality agricultural produce.</p>
+            <button class="gold-button"
+            onclick="alert('Connect this listing to a farmer account for real contact details.')">
+                VIEW CROP
+            </button>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=800"
+            alt="Mangoes">
+            <h3>Fresh Mangoes</h3>
+            <p>Fresh fruits for buyers.</p>
+            <button class="gold-button"
+            onclick="alert('Connect this listing to a farmer account for real contact details.')">
+                VIEW CROP
+            </button>
+        </div>
+    </div>
+    <p style="color:#aaa;font-size:12px;margin-top:15px">
+        These are demonstration listings, not verified offers.
+    </p>
+</section>
+
+<section class="section">
+    <div class="section-title">
+        <h2>OUR SERVICES</h2>
+        <p>One platform for the agricultural community.</p>
+    </div>
+
+    <div class="cards">
+        <div class="panel">
+            <h3>Farmers</h3>
+            <p>Register crops, quantities, prices and locations.</p>
+        </div>
+        <div class="panel">
+            <h3>Buyers</h3>
+            <p>Find farmers and discuss produce requirements.</p>
+        </div>
+        <div class="panel">
+            <h3>Transporters</h3>
+            <p>Coordinate collection and delivery of crops.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="contact">
+    <div class="section-title">
+        <h2>JOIN HARVESTGUARD</h2>
+        <p>Let's build a better agricultural future together.</p>
+    </div>
+
+    <div class="contact">
+        <form id="contactForm">
+            <input placeholder="Your full name" required>
+            <input type="email" placeholder="Your email" required>
+            <select required>
+                <option value="">I am a...</option>
+                <option>Farmer</option>
+                <option>Buyer</option>
+                <option>Transporter</option>
+                <option>Partner</option>
+            </select>
+            <textarea placeholder="Your message" required></textarea>
+            <button class="gold-button full">SEND MESSAGE</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <h2>HARVESTGUARD</h2>
+    <p>SAVING EVERY HARVEST</p>
+    <p>Healthy Crops. Better Food. A Stronger Tomorrow.</p>
+    <p>© 2026 HarvestGuard. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById("cropForm").addEventListener("submit",
+function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("farmerName").value;
+    const crop = document.getElementById("cropName").value;
+    const quantity = document.getElementById("quantity").value;
+    const location = document.getElementById("location").value;
+
+    document.getElementById("cropResult").innerHTML =
+        "<b>Crop listing preview</b><br>" +
+        "Farmer: " + name + "<br>" +
+        "Crop: " + crop + "<br>" +
+        "Quantity: " + quantity + " KG<br>" +
+        "Location: " + location;
+
+    this.reset();
+});
+
+function checkProblem() {
+    const problem = document.getElementById("problem").value;
+
+    if (!problem.trim()) {
+        alert("Please describe your crop problem.");
+        return;
+    }
+
+    document.getElementById("advice").innerHTML =
+        "Initial guidance: Check which plants are affected, " +
+        "when the problem started and the appearance of the leaves " +
+        "and stems. Take clear photos and contact an agricultural " +
+        "extension officer for a reliable diagnosis. " +
+        "<br><br>This is general guidance, not an AI diagnosis.";
+}
+
+function toggleMode() {
+    document.body.classList.toggle("light");
+}
+
+function changeLanguage() {
+    const language = document.getElementById("language").value;
+
+    if (language === "sw") {
+        document.getElementById("heroText").innerText =
+        "Suluhisho za kilimo bora kwa mavuno mengi, " +
+        "masoko imara na mustakabali mzuri.";
+    } else {
+        document.getElementById("heroText").innerText =
+        "Smart farming solutions for better yields, " +
+        "stronger markets and a brighter future.";
+    }
+}
+
+document.getElementById("contactForm").addEventListener("submit",
+function(e) {
+    e.preventDefault();
+    alert("Thank you for contacting HarvestGuard. " +
+    "This demonstration form is not connected to a server yet.");
+    this.reset();
+});
+</script>
+
+</body>
+</html>
